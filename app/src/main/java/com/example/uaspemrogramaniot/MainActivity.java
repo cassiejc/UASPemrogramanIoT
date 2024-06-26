@@ -1,19 +1,25 @@
 package com.example.uaspemrogramaniot;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private MqttHelper mqttHelper;
     private TextView mq5SensorValueTextView;
-//    private TextView irSensorValueTextView;
-    private ImageView irSensorStatusImageView;
-
-
+    private ImageView irSensorStatusImageView1;
+    private ImageView irSensorStatusImageView2;
+    private ImageView irSensorStatusImageView3;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +27,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mq5SensorValueTextView = findViewById(R.id.mq5SensorValueTextView);
-//        irSensorValueTextView = findViewById(R.id.irSensorValueTextView);
-        irSensorStatusImageView = findViewById(R.id.irSensorStatusImageView);
+        irSensorStatusImageView1 = findViewById(R.id.irSensorStatusImageView);
+        irSensorStatusImageView2 = findViewById(R.id.irSensorStatusImageView2); // Initialize irSensorStatusImageView2
+        irSensorStatusImageView3 = findViewById(R.id.irSensorStatusImageView3); // Initialize irSensorStatusImageView3
         mqttHelper = new MqttHelper(this);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -35,18 +43,44 @@ public class MainActivity extends AppCompatActivity {
     public void updateMq5SensorValue(String sensorValue){
         runOnUiThread(() -> {
             mq5SensorValueTextView.setText("MQ-5 Sensor Value: " + sensorValue);
+            uploadMq5SensorValueToFirebase(sensorValue);
         });
     }
 
-    public void updateIrSensorValue(String sensorValue) {
+    private void uploadMq5SensorValueToFirebase(String sensorValue) {
+        try {
+            databaseReference.child("mq5Sensor").setValue(sensorValue);
+        } catch (Exception e) {
+            Log.e(TAG, "Error uploading MQ-5 sensor value to Firebase", e);
+        }
+    }
+
+    public void updateIrSensorValue1(String sensorValue) {
         runOnUiThread(() -> {
-//            irSensorValueTextView.setText("IR Sensor Value: " + sensorValue);
             if (sensorValue.equals("Car Detected")) {
-//                irSensorValueTextView.setTextColor(Color.RED);
-                irSensorStatusImageView.setImageResource(R.drawable.red_indicator);
+                irSensorStatusImageView1.setImageResource(R.drawable.red_indicator);
             } else {
-//                irSensorValueTextView.setTextColor(Color.GREEN);
-                irSensorStatusImageView.setImageResource(R.drawable.green_indicator);
+                irSensorStatusImageView1.setImageResource(R.drawable.green_indicator);
+            }
+        });
+    }
+
+    public void updateIrSensorValue2(String sensorValue) {
+        runOnUiThread(() -> {
+            if (sensorValue.equals("Car Detected")) {
+                irSensorStatusImageView2.setImageResource(R.drawable.red_indicator);
+            } else {
+                irSensorStatusImageView2.setImageResource(R.drawable.green_indicator);
+            }
+        });
+    }
+
+    public void updateIrSensorValue3(String sensorValue) {
+        runOnUiThread(() -> {
+            if (sensorValue.equals("Car Detected")) {
+                irSensorStatusImageView3.setImageResource(R.drawable.red_indicator);
+            } else {
+                irSensorStatusImageView3.setImageResource(R.drawable.green_indicator);
             }
         });
     }

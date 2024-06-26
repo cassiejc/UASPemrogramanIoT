@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "978748526994",
+    "firebase_url": "https://uaspemrogramaniot-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "uaspemrogramaniot",
+    "storage_bucket": "uaspemrogramaniot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978748526994:android:9a9b92f594fa8f79b1314b",
+        "android_client_info": {
+          "package_name": "com.example.uaspemrogramaniot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpNojBLE_djtkwJST0sKU-OsG7wTUWQsI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
