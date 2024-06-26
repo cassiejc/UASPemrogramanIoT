@@ -15,31 +15,37 @@
         android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"/>
 
-
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/irSensorStatusImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:layout_below="@id/ldrSensorValueTextView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp" />
 
         <ImageView
-            android:id="@+id/irSensorStatusImageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/irSensorStatusImageView"
-            android:layout_marginTop="16dp"
-            android:layout_centerHorizontal="true"/>
+            android:id="@+id/irSensorStatusImageView3"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_below="@id/irSensorStatusImageView2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
 
         <ImageView
-            android:id="@+id/irSensorStatusImageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/irSensorStatusImageView2"
-            android:layout_marginTop="16dp"
-            android:layout_centerHorizontal="true"/>
+            android:id="@+id/irSensorStatusImageView2"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_below="@id/irSensorStatusImageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
 
 
 </RelativeLayout>

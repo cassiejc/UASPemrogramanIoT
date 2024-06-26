@@ -10,7 +10,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MqttHelper {
-    private static final String MQTT_BROKER = "tcp://broker.emqx.io:1883";
+    private static final String MQTT_BROKER = "tcp://192.168.1.152:1883";
     private static final String MQ5_SENSOR_TOPIC = "ldrSensor";
     private static final String IR_SENSOR_TOPIC_1 = "irSensor1";
     private static final String IR_SENSOR_TOPIC_2 = "irSensor2";
