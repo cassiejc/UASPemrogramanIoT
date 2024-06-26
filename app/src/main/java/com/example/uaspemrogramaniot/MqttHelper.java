@@ -11,7 +11,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MqttHelper {
     private static final String MQTT_BROKER = "tcp://broker.emqx.io:1883";
-    private static final String MQ5_SENSOR_TOPIC = "mq5Sensor";
+    private static final String MQ5_SENSOR_TOPIC = "ldrSensor";
     private static final String IR_SENSOR_TOPIC_1 = "irSensor1";
     private static final String IR_SENSOR_TOPIC_2 = "irSensor2";
     private static final String IR_SENSOR_TOPIC_3 = "irSensor3";
@@ -48,7 +48,7 @@ public class MqttHelper {
                     String payload = new String(message.getPayload());
 
                     if (topic.equals(MQ5_SENSOR_TOPIC)) {
-                        mainActivity.updateMq5SensorValue(payload);
+                        mainActivity.updateLdrSensorValue(payload);
                     } else if (topic.equals(IR_SENSOR_TOPIC_1)) {
                         mainActivity.updateIrSensorValue1(payload);
                     } else if (topic.equals(IR_SENSOR_TOPIC_2)) {

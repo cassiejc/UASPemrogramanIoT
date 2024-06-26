@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/mq5SensorValueTextView"
+        android:id="@+id/ldrSensorValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MQ-5 Sensor Value"
@@ -21,7 +21,7 @@
             android:id="@+id/irSensorStatusImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/mq5SensorValueTextView"
+            android:layout_below="@id/ldrSensorValueTextView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp" />
 

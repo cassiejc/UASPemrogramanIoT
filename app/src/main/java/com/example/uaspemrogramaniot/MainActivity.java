@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private MqttHelper mqttHelper;
-    private TextView mq5SensorValueTextView;
+    private TextView ldrSensorValueTextView;
     private ImageView irSensorStatusImageView1;
     private ImageView irSensorStatusImageView2;
     private ImageView irSensorStatusImageView3;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mq5SensorValueTextView = findViewById(R.id.mq5SensorValueTextView);
+        ldrSensorValueTextView = findViewById(R.id.ldrSensorValueTextView);
         irSensorStatusImageView1 = findViewById(R.id.irSensorStatusImageView);
         irSensorStatusImageView2 = findViewById(R.id.irSensorStatusImageView2); // Initialize irSensorStatusImageView2
         irSensorStatusImageView3 = findViewById(R.id.irSensorStatusImageView3); // Initialize irSensorStatusImageView3
@@ -40,16 +40,16 @@ public class MainActivity extends AppCompatActivity {
         mqttHelper.disconnect();
     }
 
-    public void updateMq5SensorValue(String sensorValue){
+    public void updateLdrSensorValue(String sensorValue){
         runOnUiThread(() -> {
-            mq5SensorValueTextView.setText("MQ-5 Sensor Value: " + sensorValue);
-            uploadMq5SensorValueToFirebase(sensorValue);
+            ldrSensorValueTextView.setText("LDR Sensor Value: " + sensorValue);
+            uploadLdrSensorValueToFirebase(sensorValue);
         });
     }
 
-    private void uploadMq5SensorValueToFirebase(String sensorValue) {
+    private void uploadLdrSensorValueToFirebase(String sensorValue) {
         try {
-            databaseReference.child("mq5Sensor").setValue(sensorValue);
+            databaseReference.child("ldrSensor").setValue(sensorValue);
         } catch (Exception e) {
             Log.e(TAG, "Error uploading MQ-5 sensor value to Firebase", e);
         }
