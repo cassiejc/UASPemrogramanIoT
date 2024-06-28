@@ -17,15 +17,19 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private MqttHelper mqttHelper;
     private TextView ldrSensorValueTextView;
     private TextView tvFull;
+    private TextView tvCarCount;
     private ImageView irSensorStatusImageView1;
     private ImageView irSensorStatusImageView2;
     private ImageView irSensorStatusImageView3;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         ldrSensorValueTextView = findViewById(R.id.ldrSensorValueTextView);
         tvFull = findViewById(R.id.tvFull);
+        tvCarCount = findViewById(R.id.tvCarCount);
         irSensorStatusImageView1 = findViewById(R.id.irSensorStatusImageView);
         irSensorStatusImageView2 = findViewById(R.id.irSensorStatusImageView2);
         irSensorStatusImageView3 = findViewById(R.id.irSensorStatusImageView3);
@@ -104,7 +109,10 @@ public class MainActivity extends AppCompatActivity {
             ldrData.add(Float.parseFloat(sensorValue));
             setupLineChart();
         });
+        String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+
         Map<String, Object> data = new HashMap<>();
+        data.put("time", currentTime);
         data.put("value", sensorValue);
         data.put("timestamp", System.currentTimeMillis());
 
@@ -115,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private List<ILineDataSet> getLineDataset(){
-//        ArrayList<BarDataSet> dataSets = new ArrayList<>();
         ArrayList<Entry> valueset = new ArrayList<>();
 
         for (int i = 0; i < ldrData.size(); i++) {
@@ -195,6 +202,24 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tvFull.setVisibility(TextView.INVISIBLE);
         }
+    }
+
+    public void updateCarCount(String carCount) {
+        runOnUiThread(() -> {
+            tvCarCount.setText("Car Count: " + carCount);
+        });
+
+        String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("carCount", carCount);
+        data.put("time", currentTime);
+        data.put("timestamp", System.currentTimeMillis());
+
+        db.collection("carCounts")
+                .add(data)
+                .addOnSuccessListener(documentReference -> Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId()))
+                .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
     }
 
 }

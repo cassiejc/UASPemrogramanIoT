@@ -14,6 +14,7 @@ public class MqttHelper {
     private static final String IR_SENSOR_TOPIC_1 = "irSensor1";
     private static final String IR_SENSOR_TOPIC_2 = "irSensor2";
     private static final String IR_SENSOR_TOPIC_3 = "irSensor3";
+    private static final String GATE_COUNT_TOPIC = "gateCount";
     private static final String CLIENT_ID = "android_client";
 
     private MqttClient mqttClient;
@@ -30,8 +31,9 @@ public class MqttHelper {
                     try {
                         mqttClient.subscribe(LDR_SENSOR_TOPIC,0);
                         mqttClient.subscribe(IR_SENSOR_TOPIC_1, 0);
-                        mqttClient.subscribe(IR_SENSOR_TOPIC_2, 0); // Subscribe to IR_SENSOR_TOPIC_2
-                        mqttClient.subscribe(IR_SENSOR_TOPIC_3, 0); // Subscribe to IR_SENSOR_TOPIC_3
+                        mqttClient.subscribe(IR_SENSOR_TOPIC_2, 0);
+                        mqttClient.subscribe(IR_SENSOR_TOPIC_3, 0);
+                        mqttClient.subscribe(GATE_COUNT_TOPIC, 0);
                     } catch (MqttException e){
                         e.printStackTrace();
                     }
@@ -54,6 +56,8 @@ public class MqttHelper {
                         mainActivity.updateIrSensorValue2(payload);
                     } else if (topic.equals(IR_SENSOR_TOPIC_3)) {
                         mainActivity.updateIrSensorValue3(payload);
+                    } else if (topic.equals(GATE_COUNT_TOPIC)) {
+                        mainActivity.updateCarCount(payload);
                     }
                 }
 

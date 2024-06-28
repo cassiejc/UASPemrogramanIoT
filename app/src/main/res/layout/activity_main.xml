@@ -15,8 +15,18 @@
         android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:id="@+id/tvCarCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Car Count: 0"
+        android:textSize="18sp"
+        android:layout_below="@id/ldrSensorValueTextView"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"/>
+
     <LinearLayout
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
