@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private LineChart ldrChart;
     private ArrayList<Float> ldrData;
     private static final String TAG = "MainActivity";
+    private Handler handler;
+    private final int UPDATE_INTERVAL = 2000;
 
     private boolean isCarDetected1 = false;
     private boolean isCarDetected2 = false;
@@ -55,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
         ldrData = new ArrayList<>();
         setupLineChart();
 
+        handler = new Handler(Looper.getMainLooper());
+        startRepeatingTask();
+
     }
 
     @Override
@@ -62,6 +69,34 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         mqttHelper.disconnect();
     }
+
+    private void startRepeatingTask() {
+        updateChartRunnable.run();
+    }
+
+    private void stopRepeatingTask() {
+        handler.removeCallbacks(updateChartRunnable);
+    }
+
+    private Runnable updateChartRunnable = new Runnable() {
+        @Override
+        public void run() {
+            LineData lineData = ldrChart.getData();
+            if (lineData != null) {
+                LineDataSet dataSet = (LineDataSet) lineData.getDataSetByIndex(0);
+                if (dataSet != null) {
+                    dataSet.clear();
+                    for (int i = 0; i< ldrData.size(); i++) {
+                        dataSet.addEntry(new Entry(ldrData.get(i), i));
+                    }
+                }
+                ldrChart.notifyDataSetChanged();
+                ldrChart.invalidate();
+            }
+//            setupLineChart();
+            handler.postDelayed(this, UPDATE_INTERVAL);
+        }
+    };
 
     public void updateLdrSensorValue(String sensorValue){
         runOnUiThread(() -> {
