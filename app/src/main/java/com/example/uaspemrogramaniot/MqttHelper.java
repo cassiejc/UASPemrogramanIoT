@@ -1,7 +1,6 @@
 package com.example.uaspemrogramaniot;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -10,8 +9,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MqttHelper {
-    private static final String MQTT_BROKER = "tcp://192.168.1.152:1883";
-    private static final String MQ5_SENSOR_TOPIC = "ldrSensor";
+    private static final String MQTT_BROKER = "tcp://broker.emqx.io:1883";
+    private static final String LDR_SENSOR_TOPIC = "ldrSensor";
     private static final String IR_SENSOR_TOPIC_1 = "irSensor1";
     private static final String IR_SENSOR_TOPIC_2 = "irSensor2";
     private static final String IR_SENSOR_TOPIC_3 = "irSensor3";
@@ -29,7 +28,7 @@ public class MqttHelper {
                 @Override
                 public void connectComplete(boolean reconnect, String serverURI) {
                     try {
-                        mqttClient.subscribe(MQ5_SENSOR_TOPIC,0);
+                        mqttClient.subscribe(LDR_SENSOR_TOPIC,0);
                         mqttClient.subscribe(IR_SENSOR_TOPIC_1, 0);
                         mqttClient.subscribe(IR_SENSOR_TOPIC_2, 0); // Subscribe to IR_SENSOR_TOPIC_2
                         mqttClient.subscribe(IR_SENSOR_TOPIC_3, 0); // Subscribe to IR_SENSOR_TOPIC_3
@@ -47,7 +46,7 @@ public class MqttHelper {
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                     String payload = new String(message.getPayload());
 
-                    if (topic.equals(MQ5_SENSOR_TOPIC)) {
+                    if (topic.equals(LDR_SENSOR_TOPIC)) {
                         mainActivity.updateLdrSensorValue(payload);
                     } else if (topic.equals(IR_SENSOR_TOPIC_1)) {
                         mainActivity.updateIrSensorValue1(payload);
